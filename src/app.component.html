@@ -1,0 +1,32 @@
+<div class="container">
+    <form [formGroup]="trustForm">
+        <h3>Add trust</h3>
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" formControlName="name">
+        </div>
+
+        <!--contracts-->
+        <div formArrayName="contracts">
+            <div *ngFor="let contract of trustForm.controls.contracts.controls; let i=index" class="panel panel-default">
+                <div class="panel-heading">
+                    <span>Contract {{i + 1}}</span>
+                    <span class="glyphicon glyphicon-remove pull-right" *ngIf="trustForm.controls.contracts.controls.length > 1" (click)="removeContract(i)"></span>
+                </div>
+                <div class="panel-body" [formGroupName]="i">
+                    <contract [group]="trustForm.controls.contracts.controls[i]"></contract>
+                </div>
+            </div>
+        </div>
+        <div class="margin-20">
+            <button (click)="addContract()" class="btn btn-primary">
+                Add another contract +
+            </button>
+        </div>
+
+    </form>
+
+    <h5>Details</h5>
+    <pre>{{ trustForm.value | json }}</pre>
+</div>
